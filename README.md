@@ -84,6 +84,12 @@ http://localhost:5000
 - Interactive visualization for better decision-making.
 - User-friendly interface with clear navigation.
 
+## Dashboard Preview
+
+
+
+
+
 ## Project Structure
 
 ```
