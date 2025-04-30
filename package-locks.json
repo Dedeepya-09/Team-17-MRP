@@ -1,0 +1,16 @@
+{
+  "name": "Skill_Driven_Job_Navigator",
+  "version": "1.0.0",
+  "description": "this Project will help you with recommanding group of similar skillsets  the calucation is based on Euclidean distance score",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}

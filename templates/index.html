@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill-Driven Job Navigator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 220px;
+            background: linear-gradient(180deg, #5f2eea 0%, #36d1c4 100%);
+            color: white;
+            z-index: 10;
+        }
+        
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 16px 24px;
+            text-decoration: none;
+            font-size: 18px;
+            transition: background 0.2s;
+        }
+        
+        .sidebar a.active, .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .header {
+            margin-left: 220px;
+            background: linear-gradient(90deg, #5f2eea 0%, #36d1c4 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        
+        .content-row {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #fafbfc;
+        }
+        
+        .submit-btn {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #1d4ed8;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        table th, table td {
+            padding: 12px 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        footer {
+            margin-left: 220px;
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <a href="{{ url_for('dashboard') }}" class="{{ 'active' if active_page == 'dashboard' else '' }}">Dashboard</a>
+        <a href="{{ url_for('filter_candidates') }}" class="{{ 'active' if active_page == 'filter' else '' }}">Filter Candidates</a>
+        <a href="{{ url_for('skill_analysis') }}" class="{{ 'active' if active_page == 'skill_analysis' else '' }}">Skill Analysis</a>
+        <a href="{{ url_for('reports') }}" class="{{ 'active' if active_page == 'reports' else '' }}">Reports</a>
+    </div>
+    
+    <!-- Header -->
+    <div class="header">
+        Skill-Driven Job Navigator
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Error Display -->
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        
+        <!-- Dashboard Section -->
+        <div class="section {{ 'active' if active_page == 'dashboard' else '' }}">
+            <div class="chart-row">
+                <div class="card">
+                    <h2>Skill Distribution</h2>
+                    <canvas id="skillBarChart"></canvas>
+                </div>
+                <div class="card">
+                    <h2>Candidate Strength</h2>
+                    <canvas id="candidateStrengthChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filter Candidates Section -->
+        <div class="section {{ 'active' if active_page == 'filter' else '' }}">
+            <div class="content-row">
+                <div class="card">
+                    <h2>Enter Requirements</h2>
+                    <form method="POST" action="{{ url_for('filter_candidates') }}">
+                        <div class="form-group">
+                            <label>HTML</label>
+                            <input type="number" name="html" min="1" max="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Python</label>
+                            <input type="number" name="python" min="1" max="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Java</label>
+                            <input type="number" name="java" min="1" max="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>C</label>
+                            <input type="number" name="c" min="1" max="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>JavaScript</label>
+                            <input type="number" name="javascript" min="1" max="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>SQL</label>
+                            <input type="number" name="sql" min="1" max="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CGPA</label>
+                            <input type="number" name="cgpa" min="0" max="10" step="0.1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Number of Candidates</label>
+                            <input type="number" name="candidate" min="1" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit</button>
+                    </form>
+                </div>
+                <div class="card">
+                    <h2>Candidate Rankings</h2>
+                    <table>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Output_Score</th>
+                            <th>CGPA</th>
+                        </tr>
+                        {% if result %}
+                            {% for score, name, cgpa in result %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ name }}</td>
+                                <td>{{ score|round(4) }}</td>
+                                <td>{{ cgpa|round(2) }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: #888;">No candidates to display</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Skill Analysis Section -->
+        <div class="section {{ 'active' if active_page == 'skill_analysis' else '' }}">
+            <div class="card">
+                <h2>Candidate Skill Distribution</h2>
+                <canvas id="skillAnalysisChart" height="100"></canvas>
+            </div>
+        </div>
+        
+        <!-- Reports Section -->
+        <div class="section {{ 'active' if active_page == 'reports' else '' }}">
+            <div class="chart-row">
+                <div class="card">
+                    <h2>Overall Candidate Strength</h2>
+                    <canvas id="overallStrengthChart"></canvas>
+                </div>
+                <div class="card">
+                    <h2>CGPA Distribution</h2>
+                    <canvas id="cgpaDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        © 2025 Job Navigator | Designed for Recruiters
+    </footer>
+    
+    <script>
+        // Initialize variables with default values in case they're undefined
+        const skillLabels = {{ skill_avgs.keys()|list|tojson if skill_avgs is defined else '["HTML", "Python", "Java", "C", "JavaScript", "SQL"]' }};
+        const skillData = {{ skill_avgs.values()|list|tojson if skill_avgs is defined else '[0, 0, 0, 0, 0, 0]' }};
+        const cgpaLabels = {{ cgpa_labels|tojson if cgpa_labels is defined else '["0-5", "5-6", "6-7", "7-8", "8-10"]' }};
+        const cgpaData = {{ cgpa_hist|tojson if cgpa_hist is defined else '[0, 0, 0, 0, 0]' }};
+        const proficiencyLabels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+        const proficiencyData = {{ proficiency|tojson if proficiency is defined else '[25, 25, 25, 25]' }};
+        
+        // Dashboard - Skill Distribution Bar Chart
+        if (document.getElementById('skillBarChart')) {
+            new Chart(document.getElementById('skillBarChart'), {
+                type: 'bar',
+                data: {
+                    labels: skillLabels,
+                    datasets: [{
+                        label: 'Average Skill Level',
+                        data: skillData,
+                        backgroundColor: [
+                            '#4285F4', '#EA4335', '#34A853', 
+                            '#FBBC05', '#8E24AA', '#00BCD4'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Dashboard - Candidate Strength Pie Chart
+        if (document.getElementById('candidateStrengthChart')) {
+            new Chart(document.getElementById('candidateStrengthChart'), {
+                type: 'pie',
+                data: {
+                    labels: proficiencyLabels,
+                    datasets: [{
+                        data: proficiencyData,
+                        backgroundColor: [
+                            '#EA4335', '#4285F4', '#FBBC05', '#34A853'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+        
+        // Skill Analysis Chart
+        if (document.getElementById('skillAnalysisChart')) {
+            new Chart(document.getElementById('skillAnalysisChart'), {
+                type: 'bar',
+                data: {
+                    labels: skillLabels,
+                    datasets: [{
+                        label: 'Average Skill Level',
+                        data: skillData,
+                        backgroundColor: [
+                            '#4285F4', '#EA4335', '#34A853', 
+                            '#FBBC05', '#8E24AA', '#00BCD4'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 10
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Reports - Overall Strength Chart
+        if (document.getElementById('overallStrengthChart')) {
+            new Chart(document.getElementById('overallStrengthChart'), {
+                type: 'pie',
+                data: {
+                    labels: proficiencyLabels,
+                    datasets: [{
+                        data: proficiencyData,
+                        backgroundColor: [
+                            '#EA4335', '#4285F4', '#FBBC05', '#34A853'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+        
+        // Reports - CGPA Distribution Chart
+        if (document.getElementById('cgpaDistributionChart')) {
+            new Chart(document.getElementById('cgpaDistributionChart'), {
+                type: 'pie',
+                data: {
+                    labels: cgpaLabels,
+                    datasets: [{
+                        data: cgpaData,
+                        backgroundColor: [
+                            '#EA4335', '#4285F4', '#FBBC05', '#34A853', '#8E24AA'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+    </script>
+</body>
+</html>
