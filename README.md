@@ -1,5 +1,5 @@
 # Team-17-MRP
-This is Team-17 Masters Research Project team Git Hub Account Repository
+This is the Team-17 Masters Research Project team Git Hub Account Repository
 # Skill-Driven Job Navigator
 
 A web-based platform that enables recruiters to filter, rank, and analyze candidates based on specific technical skill sets, streamlining the hiring process with an intuitive and data-driven approach.
@@ -48,27 +48,22 @@ source venv/bin/activate   # On Windows use 'venv\\Scripts\\activate'
 3. Install dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip install flask
 ```
 
-4. Set up the database (if applicable):
-
-```bash
-python manage.py migrate
-```
 
 ## Usage
 
 1. Start the application:
 
 ```bash
-python app.py
+python main.py
 ```
 
 2. Navigate to the dashboard in your web browser:
 
 ```
-http://localhost:5000
+http://127.0.0.1:5000
 ```
 
 3. Use the following main functionalities:
