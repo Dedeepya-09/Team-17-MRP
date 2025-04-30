@@ -101,18 +101,6 @@ Skill-Driven-Job-Navigator/
 ├── recommender.py
 ```
 
-```
-Skill-Driven-Job-Navigator/
-├── data/
-├── src/
-│   ├── __init__.py
-│   ├── app.py
-│   ├── models.py
-│   ├── routes.py
-│   └── templates/
-├── requirements.txt
-└── README.md
-```
 
 ## Contributing
 
