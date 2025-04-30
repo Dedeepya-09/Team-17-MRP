@@ -81,9 +81,9 @@ http://127.0.0.1:5000
 
 ## Dashboard Preview
 
-![f3fcbac4-e3cf-43c0-97a3-049f768068fe](https://github.com/user-attachments/assets/96680b0c-8204-4365-af38-eff9fb7704de)
+174ae609-50f3-4006-95d0-767fbbbc810f.MP4
 
-![3cf5daa2-e355-409e-9325-5865607ab0b1](https://github.com/user-attachments/assets/ea9fdf3e-8f7a-4361-b661-08c753c463cc)
+
 
 
 ## Project Structure
