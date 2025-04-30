@@ -87,7 +87,7 @@ http://127.0.0.1:5000
 
 
 ## Project Structure
-
+```
 Skill-Driven-Job-Navigator/
 ├── __pycache__/
 │   └── recommender.cpython-313.pyc
@@ -99,7 +99,7 @@ Skill-Driven-Job-Navigator/
 ├── package.json
 ├── package-locks.json
 ├── recommender.py
-
+```
 
 ```
 Skill-Driven-Job-Navigator/
