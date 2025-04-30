@@ -79,7 +79,7 @@ http://127.0.0.1:5000
 - Interactive visualization for better decision-making.
 - User-friendly interface with clear navigation.
 
-## Dashboard Preview
+## Dashboard Preview and Demo Video
 
 
 [![Watch the demo video](https://github.com/user-attachments/assets/a67ad30c-ba89-4040-a84c-dc2efc642b2d)](https://sluedu-my.sharepoint.com/:v:/g/personal/srisai_madamsatti_slu_edu/EQO7vRsEnNhHhBBE2jKqv-cBSdZCNAQLqHa5_QIT3htMyQ)
