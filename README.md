@@ -87,7 +87,20 @@ http://127.0.0.1:5000
 
 
 ## Project Structure
+```
+Skill-Driven-Job-Navigator/
+├── __pycache__/
+│   └── recommender.cpython-313.pyc
+├── templates/
+│   └── index.html
+├── venv/
+├── 1000DATASET_CLEANED.json
+├── main.py
+├── package.json
+├── package-locks.json
+├── recommender.py
 
+```
 ```
 Skill-Driven-Job-Navigator/
 ├── templates/
