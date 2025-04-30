@@ -100,6 +100,17 @@ Skill-Driven-Job-Navigator/
 ├── package-locks.json
 ├── recommender.py
 ```
+```
+Skill-Driven-Job-Navigator/
+├── templates/
+│   └── index.html
+├── venv/
+├── 1000DATASET_CLEANED.json
+├── main.py
+├── package.json
+├── package-locks.json
+├── recommender.py
+```
 
 
 ## Contributing
