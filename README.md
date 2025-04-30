@@ -81,6 +81,11 @@ http://127.0.0.1:5000
 
 ## Dashboard Preview
 
+
+[![Watch the demo video](https://github.com/user-attachments/assets/a67ad30c-ba89-4040-a84c-dc2efc642b2d)](https://sluedu-my.sharepoint.com/:v:/g/personal/srisai_madamsatti_slu_edu/EQO7vRsEnNhHhBBE2jKqv-cBSdZCNAQLqHa5_QIT3htMyQ)
+
+
+
 [![Watch the demo video](<img width="1440" alt="preview" src="https://github.com/user-attachments/assets/a67ad30c-ba89-4040-a84c-dc2efc642b2d" />
 )](https://sluedu-my.sharepoint.com/:v:/g/personal/srisai_madamsatti_slu_edu/EQO7vRsEnNhHhBBE2jKqv-cBSdZCNAQLqHa5_QIT3htMyQ)
 
